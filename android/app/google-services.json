@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "446005933192",
+    "project_id": "pace-b213e",
+    "storage_bucket": "pace-b213e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446005933192:android:340e08d7d5e9d9ef365b3d",
+        "android_client_info": {
+          "package_name": "com.myassignments"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446005933192-96scgt1pq1li66ltis547va72paabf58.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAysDYQY-YaEBmAyjVCji0hFBGuevN71zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446005933192-96scgt1pq1li66ltis547va72paabf58.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
