@@ -18,17 +18,13 @@ const SignUp = () => {
   const [error, setError] = useState('');
 
   const createUser = (email: string, password: string) => {
-    console.log('Email and password is ', email, password);
     try {
       const response = auth().createUserWithEmailAndPassword(email, password);
-      console.log('returned', response);
       ToastAndroid.show(
         `A pikachu appeared nearby ! ${response}`,
         ToastAndroid.SHORT,
       );
     } catch (error) {
-      console.log('errors is');
-
       ToastAndroid.show('A pikachu appeared nearby !', ToastAndroid.SHORT);
     }
   };

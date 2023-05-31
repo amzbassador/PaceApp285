@@ -19,6 +19,7 @@ import Login from './src/components/AuthScreens/Login';
 import VideoPlayer from './src/components/AuthScreens/VideoPlayer';
 import VideoList from './src/components/VideoLists';
 import SignUp from './src/components/signup';
+import Listing from './src/components/Listing';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -64,6 +65,28 @@ function App(): JSX.Element {
                 backgroundColor: '#252525',
               },
 
+              headerTintColor: '#fff',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+              tabBarIcon: ({focused}) => (
+                <Icon
+                  name={focused ? 'ios-home' : 'ios-settings-outline'}
+                  size={26}
+                  style={{color: '#fff'}}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Listing"
+            component={Listing}
+            options={{
+              title: 'Listing',
+              headerStyle: {
+                backgroundColor: '#252525',
+              },
               headerTintColor: '#fff',
               headerTitleAlign: 'center',
               headerTitleStyle: {
