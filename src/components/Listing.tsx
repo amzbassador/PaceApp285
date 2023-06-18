@@ -18,7 +18,7 @@ export default function Listing() {
         .doc('id17')
         .get();
       console.log('user', usersCollection._data);
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert(error);
     }
   };

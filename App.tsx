@@ -5,7 +5,8 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -25,11 +26,101 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function App(): JSX.Element {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const isDarkMode = useColorScheme() === 'dark';
+
+  useEffect(() => {
+    AsyncStorage.getItem('isLoggedIn')
+      .then(value => {
+        setIsLoggedIn(value === 'true');
+      })
+      .catch(error => {
+        console.log('Error retrieving authentication state:', error);
+      });
+  }, []);
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('isLoggedIn');
+      console.log('value is', value);
+
+      if (value !== null) {
+        // value previously stored
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
+  getData();
+
+  // Create a stack navigator for the logged out state
+  const LoggedOutStack = createNativeStackNavigator();
+  const LoggedOutNavigator = () => (
+    <LoggedOutStack.Navigator>
+      <LoggedOutStack.Screen name="Login" component={Login} />
+      <LoggedOutStack.Screen name="Signup" component={SignUp} />
+    </LoggedOutStack.Navigator>
+  );
+
+  // Create a tab navigator for the logged in state
+  const LoggedInTabs = createBottomTabNavigator();
+  const LoggedInNavigator = () => (
+    <LoggedInTabs.Navigator
+      screenOptions={{
+        tabBarStyle: {position: 'absolute', backgroundColor: '#000'},
+      }}>
+      <LoggedInTabs.Screen
+        options={{
+          title: 'List',
+          headerStyle: {
+            backgroundColor: '#252525',
+          },
+          headerTintColor: '#fff',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          tabBarIcon: ({focused}) => (
+            <Icon
+              name={focused ? 'ios-filter-outline' : 'ios-filter-outline'}
+              size={26}
+              style={{color: '#fff'}}
+            />
+          ),
+        }}
+        name="VideoList"
+        component={VideoList}
+      />
+      <LoggedInTabs.Screen
+        options={{
+          title: 'Video',
+          headerStyle: {
+            backgroundColor: '#252525',
+          },
+          headerTintColor: '#fff',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          tabBarIcon: ({focused}) => (
+            <Icon
+              name={focused ? 'ios-play-outline' : 'ios-play-outline'}
+              size={26}
+              style={{color: '#fff'}}
+            />
+          ),
+        }}
+        name="Screen1"
+        component={Screen1}
+      />
+    </LoggedInTabs.Navigator>
+  );
+
   return (
     <View style={styles.view}>
       <NavigationContainer>
-        <Tab.Navigator
+        {isLoggedIn ? <LoggedInNavigator /> : <LoggedOutNavigator />}
+        {/* <Tab.Navigator
           screenOptions={{
             tabBarStyle: {position: 'absolute', backgroundColor: '#000'},
           }}>
@@ -79,74 +170,8 @@ function App(): JSX.Element {
               ),
             }}
           />
-          <Tab.Screen
-            name="Listing"
-            component={Listing}
-            options={{
-              title: 'Listing',
-              headerStyle: {
-                backgroundColor: '#252525',
-              },
-              headerTintColor: '#fff',
-              headerTitleAlign: 'center',
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              },
-              tabBarIcon: ({focused}) => (
-                <Icon
-                  name={focused ? 'ios-home' : 'ios-settings-outline'}
-                  size={26}
-                  style={{color: '#fff'}}
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Home"
-            component={VideoList}
-            options={{
-              title: 'List',
-              headerStyle: {
-                backgroundColor: '#252525',
-              },
-
-              headerTintColor: '#fff',
-              headerTitleAlign: 'center',
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              },
-              tabBarIcon: ({focused}) => (
-                <Icon
-                  name={focused ? 'ios-home' : 'ios-play-outline'}
-                  size={26}
-                  style={{color: '#fff'}}
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Screen1"
-            component={Screen1}
-            options={{
-              title: 'Videos',
-              headerStyle: {
-                backgroundColor: '#252525',
-              },
-
-              headerTintColor: '#fff',
-              headerTitleAlign: 'center',
-              headerTitleStyle: {
-                fontWeight: 'bold',
-              },
-              tabBarIcon: ({focused}) => (
-                <Icon
-                  name={focused ? 'ios-home' : 'ios-play-outline'}
-                  size={26}
-                  style={{color: '#fff'}}
-                />
-              ),
-            }}
-          />
+    
+ 
 
           <Tab.Screen
             name="Calender"
@@ -171,7 +196,7 @@ function App(): JSX.Element {
               ),
             }}
           />
-        </Tab.Navigator>
+        </Tab.Navigator> */}
       </NavigationContainer>
     </View>
   );

@@ -6,6 +6,7 @@ export default function Screen1({route}) {
   LogBox.ignoreAllLogs();
   // const videoId = '84WIaK3bl_s';
   const {videoId} = route.params || 'qt-p-4CQS74';
+  console.log('VideoId', videoId);
 
   return (
     <View style={styles.container}>

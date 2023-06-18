@@ -1,6 +1,8 @@
 import {Alert, StatusBar} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
+import RNRestart from 'react-native-restart';
 import {
   StyleSheet,
   Text,
@@ -11,40 +13,41 @@ import {
   TouchableOpacity,
 } from 'react-native';
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const signIn = (email: any, password: any) => {
+  const [email, setEmail] = useState(' ');
+  const [password, setPassword] = useState(' ');
+  const signIn = async (email: any, password: any) => {
     console.log('signIn', email, password);
     try {
       auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => {
+        .then(async () => {
           // Login successful
+          await AsyncStorage.setItem('isLoggedIn', 'true');
           Alert.alert('Success', 'Login successful');
+          RNRestart.Restart();
         })
         .catch(error => {
           Alert.alert('Error', 'Login failed');
         });
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert(error);
     }
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputView}>
         <TextInput
-          placeholder="Enter your email"
-          value={email}
+          style={styles.TextInput}
+          placeholder="Enter Your Email"
           onChangeText={email => setEmail(email)}
-          autoCapitalize="none"
         />
       </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Password."
+          placeholder="Password"
           placeholderTextColor="#003f5c"
-          secureTextEntry={true}
           onChangeText={password => setPassword(password)}
         />
       </View>
