@@ -11,6 +11,7 @@ import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Screen1 from './src/components/screen1';
+import auth from '@react-native-firebase/auth';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FilterAndSort from './src/components/filters';
 import Calenders from './src/components/calenders';
@@ -30,19 +31,20 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   useEffect(() => {
-    AsyncStorage.getItem('isLoggedIn')
-      .then(value => {
-        setIsLoggedIn(value === 'true');
-      })
-      .catch(error => {
-        console.log('Error retrieving authentication state:', error);
-      });
+    // AsyncStorage.getItem('isLoggedIn')
+    //   .then(value => {
+    //     setIsLoggedIn(value === 'true');
+    //   })
+    //   .catch(error => {
+    //     console.log('Error retrieving authentication state:', error);
+    //   });
   }, []);
 
   const getData = async () => {
+    const user = auth().currentUser;
+
     try {
       const value = await AsyncStorage.getItem('isLoggedIn');
-      console.log('value is', value);
 
       if (value !== null) {
         // value previously stored
@@ -51,14 +53,18 @@ function App(): JSX.Element {
       // error reading value
     }
   };
-  getData();
+  // getData();
 
   // Create a stack navigator for the logged out state
   const LoggedOutStack = createNativeStackNavigator();
   const LoggedOutNavigator = () => (
     <LoggedOutStack.Navigator>
       <LoggedOutStack.Screen name="Login" component={Login} />
-      <LoggedOutStack.Screen name="Signup" component={SignUp} />
+      {/* <LoggedOutStack.Screen name="Signup" component={SignUp} /> */}
+      <LoggedOutStack.Screen
+        name="tabNavigator"
+        component={LoggedInNavigator}
+      />
     </LoggedOutStack.Navigator>
   );
 
@@ -119,7 +125,7 @@ function App(): JSX.Element {
   return (
     <View style={styles.view}>
       <NavigationContainer>
-        {isLoggedIn ? <LoggedInNavigator /> : <LoggedOutNavigator />}
+        <LoggedOutNavigator />
       </NavigationContainer>
     </View>
   );

@@ -12,7 +12,7 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-export default function Login() {
+export default function Login({navigation}) {
   const [email, setEmail] = useState(' ');
   const [password, setPassword] = useState(' ');
   const signIn = async (email: any, password: any) => {
@@ -20,10 +20,12 @@ export default function Login() {
       auth()
         .signInWithEmailAndPassword(email, password)
         .then(async () => {
+          console.log('login');
           // Login successful
-          await AsyncStorage.setItem('isLoggedIn', 'true');
+          // await AsyncStorage.setItem('isLoggedIn', 'true');
           Alert.alert('Success', 'Login successful');
-          RNRestart.Restart();
+          await navigation.push('tabNavigator');
+          // RNRestart.Restart();
         })
         .catch(error => {
           Alert.alert('Error', 'Login failed');
