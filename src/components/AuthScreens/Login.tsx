@@ -16,7 +16,6 @@ export default function Login() {
   const [email, setEmail] = useState(' ');
   const [password, setPassword] = useState(' ');
   const signIn = async (email: any, password: any) => {
-    console.log('signIn', email, password);
     try {
       auth()
         .signInWithEmailAndPassword(email, password)
