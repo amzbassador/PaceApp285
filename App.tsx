@@ -64,6 +64,7 @@ function App(): JSX.Element {
       <LoggedOutStack.Screen
         name="tabNavigator"
         component={LoggedInNavigator}
+        options={{headerShown: false}}
       />
     </LoggedOutStack.Navigator>
   );
