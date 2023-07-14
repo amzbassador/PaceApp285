@@ -1,24 +1,49 @@
-import React from 'react';
-import {View, StyleSheet, LogBox} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, LogBox, ActivityIndicator} from 'react-native';
 import {WebView} from 'react-native-webview';
+import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 
 export default function Screen1({route}) {
   LogBox.ignoreAllLogs();
   // const videoId = '84WIaK3bl_s';
   const {videoId} = route.params || 'qt-p-4CQS74';
-  console.log('VideoId', videoId);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Show the activity indicator
+    setLoading(true);
+
+    // Hide the activity indicator after 3 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    // Clean up the timeout
+    return () => clearTimeout(timeout);
+  }, []);
   return (
     <View style={styles.container}>
-      <WebView
-        style={styles.videoPlayer}
-        source={{uri: `https://www.youtube.com/embed/${videoId}`}}
-        allowsInlineMediaPlayback={true}
-        mediaPlaybackRequiresUserAction={false}
-      />
-      <View style={styles.overlay}>
-        <View style={styles.cornerOverlay} />
-      </View>
+      {loading ? (
+        <ActivityIndicator size="large" color="blue" />
+      ) : (
+        <>
+          <ReactNativeZoomableView
+            maxZoom={1.5}
+            zoomStep={0.5}
+            minZoom={1}
+            initialZoom={1}>
+            <WebView
+              style={styles.videoPlayer}
+              source={{uri: `https://www.youtube.com/embed/${videoId}`}}
+              allowsInlineMediaPlayback={true}
+              mediaPlaybackRequiresUserAction={false}
+            />
+          </ReactNativeZoomableView>
+          <View style={styles.overlay}>
+            <View style={styles.cornerOverlay} />
+          </View>
+        </>
+      )}
     </View>
   );
 }

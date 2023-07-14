@@ -59,7 +59,11 @@ function App(): JSX.Element {
   const LoggedOutStack = createNativeStackNavigator();
   const LoggedOutNavigator = () => (
     <LoggedOutStack.Navigator>
-      <LoggedOutStack.Screen name="Login" component={Login} />
+      <LoggedOutStack.Screen
+        name="Login"
+        options={{headerShown: false}}
+        component={Login}
+      />
       {/* <LoggedOutStack.Screen name="Signup" component={SignUp} /> */}
       <LoggedOutStack.Screen
         name="tabNavigator"
@@ -75,6 +79,7 @@ function App(): JSX.Element {
     <LoggedInTabs.Navigator
       screenOptions={{
         tabBarStyle: {position: 'absolute', backgroundColor: '#000'},
+        headerShown: false,
       }}>
       <LoggedInTabs.Screen
         options={{

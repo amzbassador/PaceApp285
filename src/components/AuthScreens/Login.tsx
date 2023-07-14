@@ -18,7 +18,7 @@ export default function Login({navigation}) {
   const signIn = async (email: any, password: any) => {
     try {
       auth()
-        .signInWithEmailAndPassword(email, password)
+        .signInWithEmailAndPassword(email.trim(), password.trim())
         .then(async () => {
           console.log('login');
           // Login successful
@@ -37,6 +37,9 @@ export default function Login({navigation}) {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Image style={styles.image} source={require('../images/logo.png')} />
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -56,14 +59,13 @@ export default function Login({navigation}) {
       <TouchableOpacity
         onPress={() => signIn(email, password)}
         style={{
-          padding: 20,
-          margin: 50,
-          marginVertical: 10,
-          borderRadius: 10,
-          backgroundColor: '#f6880e',
-          shadowOffset: {width: 0, height: 10},
-          shadowOpacity: 0.3,
-          shadowRadius: 10,
+          width: '80%',
+          borderRadius: 25,
+          height: 50,
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: 40,
+          backgroundColor: '#FFA500',
         }}>
         <Text style={{color: '#fff', textAlign: 'center', fontSize: 20}}>
           Sign In
@@ -75,12 +77,14 @@ export default function Login({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
   image: {
     marginBottom: 40,
+    width: 180,
+    height: 180,
   },
   inputView: {
     backgroundColor: '#FFC0CB',
