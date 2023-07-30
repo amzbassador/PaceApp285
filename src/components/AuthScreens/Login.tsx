@@ -22,10 +22,8 @@ export default function Login({navigation}) {
         .then(async () => {
           console.log('login');
           // Login successful
-          // await AsyncStorage.setItem('isLoggedIn', 'true');
           Alert.alert('Success', 'Login successful');
           await navigation.push('tabNavigator');
-          // RNRestart.Restart();
         })
         .catch(error => {
           Alert.alert('Error', 'Login failed');

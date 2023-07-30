@@ -34,7 +34,9 @@ export default function Screen1({route}) {
             initialZoom={1}>
             <WebView
               style={styles.videoPlayer}
-              source={{uri: `https://www.youtube.com/embed/${videoId}`}}
+              source={{
+                uri: `https://www.youtube.com/embed/${videoId}?playsinline=1&vq=hd1080`,
+              }}
               allowsInlineMediaPlayback={true}
               mediaPlaybackRequiresUserAction={false}
             />
