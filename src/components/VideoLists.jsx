@@ -34,7 +34,15 @@ const VideoList = ({navigation}) => {
           }));
           console.log('videoList', videoData);
           setVideoList(videoData);
-        } else {
+        }else if (email && email.startsWith('g11')){
+          const videoData = await usersCollection._data.g11.map(v => ({
+            id: v,
+            thumbnail: `https://i.ytimg.com/vi/${v}/hqdefault.jpg`,
+          }));
+          console.log('videoList', videoData);
+          setVideoList(videoData);
+        }
+         else {
           const videoData = await usersCollection._data.videoId.map(v => ({
             id: v,
             thumbnail: `https://i.ytimg.com/vi/${v}/hqdefault.jpg`,
@@ -78,7 +86,7 @@ const VideoList = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#040e38',
   },
   listContainer: {
     paddingVertical: 10,
