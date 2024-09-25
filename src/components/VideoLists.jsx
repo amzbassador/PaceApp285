@@ -41,6 +41,13 @@ const VideoList = ({navigation}) => {
           }));
           console.log('videoList', videoData);
           setVideoList(videoData);
+        }else if (email && email.startsWith('g13')){
+          const videoData = await usersCollection._data.g13.map(v => ({
+            id: v,
+            thumbnail: `https://i.ytimg.com/vi/${v}/hqdefault.jpg`,
+          }));
+          console.log('videoList', videoData);
+          setVideoList(videoData);
         }
          else {
           const videoData = await usersCollection._data.videoId.map(v => ({
